@@ -24,7 +24,7 @@ export default function JobCard({
             "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
           }
           alt={title}
-          className="h-80 w-full rounded-tr-3xl object-cover"
+          className="h-40 w-full rounded-tr-3xl object-cover"
         />
 
         <div className="p-4">
@@ -32,7 +32,7 @@ export default function JobCard({
             {title || "No Job Title"}
           </strong>
 
-          <p className="mt-2 text-pretty text-gray-700">
+          <p className="mt-2 line-clamp-1 text-pretty text-gray-700">
             {description || "No Job Description"}
           </p>
 

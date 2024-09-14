@@ -7,6 +7,8 @@ import RootLayout from "./components/layouts/RootLayout.jsx";
 import Jobs from "./pages/jobs/Jobs.jsx";
 import JobDetails from "./pages/jobDetail/JobDetails.jsx";
 import { Login } from "./pages/auth/Login.jsx";
+import { Provider } from "react-redux";
+import { store } from "./app/store.js";
 
 const route = createBrowserRouter([
   {
@@ -34,6 +36,8 @@ const route = createBrowserRouter([
 ]);
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={route} />
+    <Provider store={store}>
+      <RouterProvider router={route} />
+    </Provider>
   </StrictMode>
 );

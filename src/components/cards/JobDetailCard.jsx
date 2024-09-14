@@ -1,14 +1,22 @@
 import { Card } from "flowbite-react";
 
-export function JobDetailCard() {
+export function JobDetailCard({ thumbnail, title, description }) {
   return (
-    <Card className="max-w-sm" imgSrc="/images/blog/image-4.jpg" horizontal>
+    <Card className="max-w-sm" horizontal>
+      <div>
+        <img
+          src={
+            thumbnail ||
+            "https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
+          }
+          alt={title}
+        />
+      </div>
       <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-        Noteworthy technology acquisitions 2021
+        {title || "No Job Title"}
       </h5>
       <p className="font-normal text-gray-700 dark:text-gray-400">
-        Here are the biggest enterprise technology acquisitions of 2021 so far,
-        in reverse chronological order.
+        {description || "No Job Description"}
       </p>
     </Card>
   );
