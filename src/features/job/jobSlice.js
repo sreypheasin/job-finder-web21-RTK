@@ -5,6 +5,7 @@ import { BASE_URL } from "../api";
 const initialState = {
   jobs: [],
   jobDetail: {},
+  jobEachCategory: [],
   status: "idle" // loading, succeeded, failed
 };
 
@@ -19,7 +20,7 @@ export const fetchJobs = createAsyncThunk("job/fetchJobs", async () => {
   }
 });
 
-// fetch jobs
+// fetch jobs by id
 export const fetchJobById = createAsyncThunk("job/fetchJobById", async (id) => {
   try {
     const res = await fetch(`${BASE_URL}jobs/${id}/`).then((res) => res.json());
@@ -29,6 +30,22 @@ export const fetchJobById = createAsyncThunk("job/fetchJobById", async (id) => {
     console.log("error", error);
   }
 });
+
+// filter job by category
+export const fetchJobByCategory = createAsyncThunk(
+  "job/fetchJobByCategory",
+  async (category) => {
+    try {
+      const res = await fetch(`${BASE_URL}jobs/?category=${category}`).then(
+        (res) => res.json()
+      );
+      const jobs = await res;
+      return jobs;
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+);
 
 // create slice
 export const jobSlice = createSlice({
@@ -58,6 +75,17 @@ export const jobSlice = createSlice({
       })
       .addCase(fetchJobById.rejected, (state) => {
         state.status = "failed";
+      })
+      .addCase(fetchJobByCategory.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchJobByCategory.fulfilled, (state, action) => {
+        console.log("action.payload job by category", action?.payload?.results);
+        state.status = "succeeded";
+        state.jobEachCategory = action?.payload?.results;
+      })
+      .addCase(fetchJobByCategory.rejected, (state) => {
+        state.status = "failed";
       });
   }
 });
@@ -66,5 +94,3 @@ export const jobSlice = createSlice({
 export default jobSlice.reducer;
 
 // export selector
-export const selectJobs = (state) => state.job.jobs;
-// export const selectJobs = (state) => state.job.jobs;
